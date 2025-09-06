@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+arm.access_website_order_model,access_website_order_model,arm.model_website_order_model,base.group_user,1,1,1,1
+access_defect_reason_wizard,access.defect.reason.wizard,model_defect_reason_wizard,base.group_user,1,1,1,1

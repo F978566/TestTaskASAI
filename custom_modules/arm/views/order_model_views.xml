@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_order_model_form" model="ir.ui.view">
+        <field name="name">website.order_model.form</field>
+        <field name="model">website.order_model</field>
+        <field name="arch" type="xml">
+            <form string="Order Form">
+                <sheet>
+                    <notebook>
+                        <page string="Details">
+                            <group>
+                                <field name="name" string="Order Name"/>
+                                <field name="order_number" string="Order Number"/>
+                                <field name="create_date" string="Creation Date" readonly="1"/>
+                                <field name="files" string="Order Files" widget="binary" filename="name"/>
+                                <field name="file_name" string="File Name"/>
+                                <field name="status" string="Order Status"/>
+                            </group>
+                        </page>
+                        <page string="Description">
+                            <group>
+                                <field name="description" string="Description" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_order_model_list" model="ir.ui.view">
+        <field name="name">website.order_model.list</field>
+        <field name="model">website.order_model</field>
+        <field name="arch" type="xml">
+            <list string="Orders" decoration-danger="status == 'defected'">
+                <field name="name" string="Order Name"/>
+                <field name="order_number" string="Order Number"/>
+                <field name="create_date" string="Creation Date"/>
+                <field name="files" invisible="1"/>
+                <button string="Download File" type="object" name="action_download_file" icon="fa-download" invisible="not files"/>
+                <field name="status" string="Order Status"/>
+                <button string="View Description" type="object" name="action_show_description" icon="fa-file-text-o" invisible="not description"/>
+                <button name="action_take_in_work" string="Take in Work" type="object" class="btn btn-primary" invisible="status != 'ready_to_work'"/>
+                <button name="action_mark_ready" string="Ready" type="object" class="btn btn-success" invisible="status != 'in_progress'"/>
+                <button name="action_mark_defected" string="Defected" type="object" class="btn btn-danger" invisible="status != 'in_progress'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_order_model_kanban" model="ir.ui.view">
+        <field name="name">website.order_model.kanban</field>
+        <field name="model">website.order_model</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="status">
+                <field name="name"/>
+                <field name="order_number"/>
+                <field name="create_date"/>
+                <field name="status"/>
+                <field name="description"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-att-class="'oe_kanban_card' + (record.status.raw_value == 'in_progress' ? ' bg-warning' : (record.status.raw_value == 'defect' ? ' bg-danger' : ''))">
+                            <div class="oe_kanban_content">
+                                <strong><field name="name"/></strong>
+                                <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                                    <span>Order Number: <field name="order_number"/></span>
+                                    <span>Created: <field name="create_date"/></span>
+                                    <span>
+                                        <t t-if="record.status.raw_value == 'in_progress'">In Progress: </t>
+                                        <field name="status"/>
+                                    </span>
+                                </div>
+                                <div class="oe_kanban_bottom">
+                                    <button type="object" name="action_show_description" string="View Description" class="btn btn-link" invisible="not description"/>
+                                    <t t-if="record.status.raw_value == 'ready_to_work'">
+                                        <button type="object" name="action_take_in_work" string="Take in Work" class="btn btn-primary"/>
+                                    </t>
+                                    <t t-if="record.status.raw_value == 'in_progress'">
+                                        <button type="object" name="action_mark_ready" string="ready" class="btn btn-success"/>
+                                        <button type="object" name="action_mark_defected" string="defected" class="btn btn-danger"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_order_model_search" model="ir.ui.view">
+        <field name="name">website.order_model.search</field>
+        <field name="model">website.order_model</field>
+        <field name="arch" type="xml">
+            <search string="Search Orders">
+                <field name="name"/>
+                <field name="order_number"/>
+                <field name="status"/>
+                <filter string="Ready to Work" name="ready_to_work" domain="[('status', '=', 'ready_to_work')]"/>
+                <group expand="1" string="Group By">
+                    <filter name="status" string="Status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_order_model_form" model="ir.actions.act_window">
+        <field name="name">Orders</field>
+        <field name="res_model">website.order_model</field>
+        <field name="view_mode">kanban,list</field>
+        <field name="view_id" ref="view_order_model_kanban"/>
+        <field name="domain">[('status', '!=', 'ready')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new order.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_order_model_root"
+        name="Orders"
+        sequence="10"
+        action="action_order_model_form"/>
+</odoo>

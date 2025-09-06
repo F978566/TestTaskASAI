@@ -1,0 +1,7 @@
+.o_list_view .o_data_row.o_decoration_danger {
+    background-color: #dc3545 !important;
+    color: white !important;
+}
+.o_list_view .o_data_row.o_decoration_danger .btn {
+    color: white !important;
+}

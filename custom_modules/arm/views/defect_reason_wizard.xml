@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_defect_reason_wizard_form" model="ir.ui.view">
+        <field name="name">defect.reason.wizard.form</field>
+        <field name="model">defect.reason.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Mark as Defected">
+                <group>
+                    <field name="defect_reason" string="Reason for Defect" nolabel="1" placeholder="Enter the reason why this order is defected..."/>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn btn-primary"/>
+                    <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_defect_reason_wizard" model="ir.actions.act_window">
+        <field name="name">Mark as Defected</field>
+        <field name="res_model">defect.reason.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_defect_reason_wizard_form"/>
+    </record>
+</odoo>
