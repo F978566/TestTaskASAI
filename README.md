@@ -41,5 +41,8 @@
 4. Указание брака - оператор может пометить любую деталь как брак с указанием причины.
 
 ### Запустите приложение
-```docker compose up```
+```docker compose up```<br>
+
+
+
 Видео демонстрация - [https://drive.google.com/file/d/1e6Iu_czNaeW_K3Eb5DIOeBNnd9bXnLyQ/view?usp=sharing](https://drive.google.com/file/d/1e6Iu_czNaeW_K3Eb5DIOeBNnd9bXnLyQ/view?usp=sharing)
