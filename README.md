@@ -19,11 +19,12 @@
     db_user = ваш_пользователь_базы_данных<br>
     db_password = ваш_пароль_базы_данных<br>
 3. В файле `.env` определите следующие переменные:<br>
-    PostgreSQL<br>
+    #### PostgreSQL<br>
     POSTGRES_DB=odoo_db<br>
     POSTGRES_USER=odoo_user<br>
     POSTGRES_PASSWORD=сильный_пароль<br>
-    Odoo config values<br>
+
+    #### Odoo config values<br>
     ODOO_ADMIN_PASSWD=ваш_пароль_администратора<br>
     ODOO_DB_HOST=postgres<br>
     ODOO_DB_PORT=5432<br>
