@@ -43,6 +43,7 @@
                 <button name="action_take_in_work" string="Take in Work" type="object" class="btn btn-primary" invisible="status != 'ready_to_work'"/>
                 <button name="action_mark_ready" string="Ready" type="object" class="btn btn-success" invisible="status != 'in_progress'"/>
                 <button name="action_mark_defected" string="Defected" type="object" class="btn btn-danger" invisible="status != 'in_progress'"/>
+                <button name="action_mark_ready_to_work" string="Back to work" type="object" class="btn btn-danger" invisible="status != 'defected'"/>
             </list>
         </field>
     </record>
@@ -74,6 +75,9 @@
                                     <button type="object" name="action_show_description" string="View Description" class="btn btn-link" invisible="not description"/>
                                     <t t-if="record.status.raw_value == 'ready_to_work'">
                                         <button type="object" name="action_take_in_work" string="Take in Work" class="btn btn-primary"/>
+                                    </t>
+                                    <t t-if="record.status.raw_value == 'defected'">
+                                        <button type="object" name="action_mark_ready_to_work" string="Back in Work" class="btn btn-primary"/>
                                     </t>
                                     <t t-if="record.status.raw_value == 'in_progress'">
                                         <button type="object" name="action_mark_ready" string="ready" class="btn btn-success"/>

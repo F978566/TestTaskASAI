@@ -92,3 +92,8 @@ class OrderModel(models.Model):
             'target': 'new',
             'context': {'active_id': self.id},
         }
+
+    def action_mark_ready_to_work(self):
+        self.write({
+            'status': 'ready_to_work',
+        })
